@@ -9,15 +9,14 @@ import LatestInvoices from '@/app/ui/dashboard/latest-invoices';
 import { lusitana } from '@/app/ui/fonts';
 
 export default async function Page() {
-  const revenue = await fetchRevenue();
-  const latestInvoices = await fetchLatestInvoices();
-
+  const [revenue, latestInvoices, dataCards] = await Promise.all([fetchRevenue(), fetchLatestInvoices(), fetchCardData()])
   const {
     totalPaidInvoices,
     totalPendingInvoices,
     numberOfInvoices,
     numberOfCustomers
-  } = await fetchCardData()
+  } = dataCards;
+
   return (
     <main>
       <h1 className={`${lusitana.className} mb-4 text-xl md:text-2xl`}>
