@@ -27,6 +27,33 @@ export async function fetchRevenue() {
     throw new Error('Failed to fetch revenue data.');
   }
 }
+export async function invoiceCountPromise(status?: 'paid' | 'pending') {
+  try {
+
+    let sqlString = `SELECT COUNT(*) FROM invoices`;
+    if(status) {
+      sqlString += ` WHERE status = $1`
+    }
+    let params: Array<string> = status ? [status] : [];
+    const data = await sql.query(`${sqlString}`, params);
+
+    return data.rows[0]?.count;
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to fetch invoice count.');
+  }
+}
+export async function customerCountPromise() {
+  try {
+
+    const data = await sql`SELECT COUNT(*) FROM customers`;
+
+    return data.rows[0]?.count;
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to fetch customer count.');
+  }
+}
 
 export async function fetchLatestInvoices() {
   try {
