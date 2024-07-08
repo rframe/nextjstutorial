@@ -5,6 +5,7 @@ import { lusitana } from '@/app/ui/fonts';
 import {LatestInvoicesSkeleton, RevenueChartSkeleton} from '@/app/ui/skeletons';
 import React, {Suspense} from 'react';
 
+export const experimental_ppr = true;
 export default async function Page() {
   return (
     <main>
